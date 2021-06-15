@@ -1,12 +1,15 @@
 from rest_framework import serializers
 
-from article.models import Article
+from article.models import Article, Author
 
 class ArticleSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
     title = serializers.CharField()
     description = serializers.CharField()
     body = serializers.CharField()
     author_id = serializers.IntegerField()
+    
+    author = serializers.SlugRelatedField(queryset=Author.objects.all(), many=False, slug_field="name")
 
 
     """

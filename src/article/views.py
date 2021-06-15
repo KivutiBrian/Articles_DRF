@@ -53,11 +53,13 @@ class ArticleViewDetail(APIView):
         serializer = ArticleSerializer(article, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        return JsonResponse(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     # delete an article by id
     def delete(self, request, pk):
-        pass
+        article = self._article_byID(pk=pk)
+        article.delete()
+        return Response({"message":"Record delete successfully"}, status=status.HTTP_200_OK)
 
 
            
